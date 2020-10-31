@@ -23,6 +23,7 @@ public class WheelOptions<T> {
     private List<T> mOptions1Items;
     private List<List<T>> mOptions2Items;
     private List<List<List<T>>> mOptions3Items;
+    private List<List<List<List<T>>>> mOptions4Items;
 
     private boolean linkage = true;//默认联动
     private boolean isRestoreItem; //切换时，还原第一项
@@ -336,7 +337,7 @@ public class WheelOptions<T> {
      * @return 索引数组
      */
     public int[] getCurrentItems() {
-        int[] currentItems = new int[3];
+        int[] currentItems = new int[4];
         currentItems[0] = wv_option1.getCurrentItem();
 
         if (mOptions2Items != null && mOptions2Items.size() > 0) {//非空判断
@@ -350,17 +351,22 @@ public class WheelOptions<T> {
         } else {
             currentItems[2] = wv_option3.getCurrentItem();
         }
-
+        if (mOptions4Items != null && mOptions3Items.size() > 0) {//非空判断
+            currentItems[3] = wv_option4.getCurrentItem() > (mOptions4Items.get(currentItems[0]).get(currentItems[2]).size() - 1) ? 0 : wv_option4.getCurrentItem();
+        } else {
+            currentItems[3] = wv_option4.getCurrentItem();
+        }
         return currentItems;
     }
 
-    public void setCurrentItems(int option1, int option2, int option3) {
+    public void setCurrentItems(int option1, int option2, int option3, int option4) {
         if (linkage) {
             itemSelected(option1, option2, option3);
         } else {
             wv_option1.setCurrentItem(option1);
             wv_option2.setCurrentItem(option2);
             wv_option3.setCurrentItem(option3);
+            wv_option4.setCurrentItem(option4);
         }
     }
 

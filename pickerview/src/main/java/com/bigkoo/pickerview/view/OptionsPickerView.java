@@ -145,7 +145,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     private void reSetCurrentItems() {
         if (wheelOptions != null) {
-            wheelOptions.setCurrentItems(mPickerOptions.option1, mPickerOptions.option2, mPickerOptions.option3);
+            wheelOptions.setCurrentItems(mPickerOptions.option1, mPickerOptions.option2, mPickerOptions.option3, mPickerOptions.option4);
         }
     }
 
@@ -195,7 +195,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     public void returnData() {
         if (mPickerOptions.optionsSelectListener != null) {
             int[] optionsCurrentItems = wheelOptions.getCurrentItems();
-            mPickerOptions.optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], optionsCurrentItems[3], clickView);
+            mPickerOptions.optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], optionsCurrentItems[3 ], clickView);
         }
     }
 

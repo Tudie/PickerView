@@ -443,7 +443,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // .setSelectOptions(0, 1, 1)
                 .setDividerColor(getResources().getColor(R.color.colorPrimary))
                 .build();
-        pvNoLinkOptions.setNPicker(list1, list2, list3,list4,null);
+        pvNoLinkOptions.setNPicker(list1, list2, list3,list4,"~");
         pvNoLinkOptions.setSelectOptions(0, 1, 1,0);
 
 
