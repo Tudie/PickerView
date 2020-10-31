@@ -84,7 +84,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextContentSize(mPickerOptions.textSizeContent);
         wheelOptions.setItemsVisible(mPickerOptions.itemsVisibleCount);
         wheelOptions.setAlphaGradient(mPickerOptions.isAlphaGradient);
-        wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3,mPickerOptions.label4);
+        wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3, mPickerOptions.label4);
         wheelOptions.setTextXOffset(mPickerOptions.x_offset_one, mPickerOptions.x_offset_two, mPickerOptions.x_offset_three, mPickerOptions.x_offset_fourth);
         wheelOptions.setCyclic(mPickerOptions.cyclic1, mPickerOptions.cyclic2, mPickerOptions.cyclic3, mPickerOptions.cyclic4);
         wheelOptions.setTypeface(mPickerOptions.font);
@@ -167,6 +167,18 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     //不联动情况下调用
+    public void setNPicker(List<T> options1Items) {
+        setNPicker(options1Items, null, null, null, null);
+    }
+
+    public void setNPicker(List<T> options1Items, List<T> options2Items) {
+        setNPicker(options1Items, options2Items, null, null, null);
+    }
+
+    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items) {
+        setNPicker(options1Items, options2Items, options3Items, null, null);
+    }
+
     public void setNPicker(List<T> options1Items,
                            List<T> options2Items,
                            List<T> options3Items,
@@ -195,7 +207,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     public void returnData() {
         if (mPickerOptions.optionsSelectListener != null) {
             int[] optionsCurrentItems = wheelOptions.getCurrentItems();
-            mPickerOptions.optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], optionsCurrentItems[3 ], clickView);
+            mPickerOptions.optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], optionsCurrentItems[3], clickView);
         }
     }
 
