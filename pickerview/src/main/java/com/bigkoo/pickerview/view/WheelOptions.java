@@ -51,6 +51,13 @@ public class WheelOptions<T> {
         texttv = (TextView) view.findViewById(R.id.texttv);
     }
 
+    public void setPicker(List<T> options1Items) {
+        setPicker(options1Items, null, null);
+    }
+
+    public void setPicker(List<T> options1Items, List<List<T>> options2Items) {
+        setPicker(options1Items, options2Items, null);
+    }
 
     public void setPicker(List<T> options1Items,
                           List<List<T>> options2Items,
@@ -167,11 +174,11 @@ public class WheelOptions<T> {
 
     //不联动情况下
     public void setNPicker(List<T> options1Items) {
-        setNPicker(options1Items,null,null,null,null);
+        setNPicker(options1Items, null, null, null, null);
     }
 
     public void setNPicker(List<T> options1Items, List<T> options2Items) {
-        setNPicker(options1Items,options2Items,null,null,null);
+        setNPicker(options1Items, options2Items, null, null, null);
     }
 
     public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items, List<T> options4Items, String textstr) {
