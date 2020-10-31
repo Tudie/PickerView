@@ -95,7 +95,7 @@ public class WheelOptions<T> {
                 int opt2Select = 0;
                 if (mOptions2Items == null) {//只有1级联动数据
                     if (optionsSelectChangeListener != null) {
-                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), 0, 0,0);
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), 0, 0, 0);
                     }
                 } else {
                     if (!isRestoreItem) {
@@ -110,7 +110,7 @@ public class WheelOptions<T> {
                         wheelListener_option2.onItemSelected(opt2Select);
                     } else {//只有2级联动数据，滑动第1项回调
                         if (optionsSelectChangeListener != null) {
-                            optionsSelectChangeListener.onOptionsSelectChanged(index, opt2Select, 0,0);
+                            optionsSelectChangeListener.onOptionsSelectChanged(index, opt2Select, 0, 0);
                         }
                     }
                 }
@@ -137,11 +137,11 @@ public class WheelOptions<T> {
 
                     //3级联动数据实时回调
                     if (optionsSelectChangeListener != null) {
-                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, opt3,0);
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, opt3, 0);
                     }
                 } else {//只有2级联动数据，滑动第2项回调
                     if (optionsSelectChangeListener != null) {
-                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, 0,0);
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, 0, 0);
                     }
                 }
             }
@@ -158,7 +158,7 @@ public class WheelOptions<T> {
             wv_option3.setOnItemSelectedListener(new OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(int index) {
-                    optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), wv_option2.getCurrentItem(), index,0);
+                    optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), wv_option2.getCurrentItem(), index, 0);
                 }
             });
         }
@@ -166,7 +166,15 @@ public class WheelOptions<T> {
 
 
     //不联动情况下
-    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items, List<T> options4Items,String textstr) {
+    public void setNPicker(List<T> options1Items) {
+        setNPicker(options1Items,null,null,null,null);
+    }
+
+    public void setNPicker(List<T> options1Items, List<T> options2Items) {
+        setNPicker(options1Items,options2Items,null,null,null);
+    }
+
+    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items, List<T> options4Items, String textstr) {
 
         // 选项1
         wv_option1.setAdapter(new ArrayWheelAdapter<>(options1Items));// 设置显示数据
@@ -238,9 +246,9 @@ public class WheelOptions<T> {
                 });
             }
         }
-        if (textstr == null||texttv == null){
+        if (textstr == null || texttv == null) {
             texttv.setVisibility(View.GONE);
-        }else {
+        } else {
             texttv.setText(textstr);
             texttv.setVisibility(View.VISIBLE);
         }
@@ -251,7 +259,7 @@ public class WheelOptions<T> {
         wv_option2.setTextSize(textSize);
         wv_option3.setTextSize(textSize);
         if (wv_option4 != null)
-        wv_option4.setTextSize(textSize);
+            wv_option4.setTextSize(textSize);
     }
 
     private void setLineSpacingMultiplier() {
@@ -288,7 +296,7 @@ public class WheelOptions<T> {
         wv_option2.setTextXOffset(x_offset_two);
         wv_option3.setTextXOffset(x_offset_three);
         if (wv_option4 != null)
-        wv_option4.setTextXOffset(x_offset_fourth);
+            wv_option4.setTextXOffset(x_offset_fourth);
     }
 
     /**
@@ -301,7 +309,7 @@ public class WheelOptions<T> {
         wv_option2.setCyclic(cyclic);
         wv_option3.setCyclic(cyclic);
         if (wv_option4 != null)
-        wv_option4.setCyclic(cyclic);
+            wv_option4.setCyclic(cyclic);
     }
 
     /**
@@ -314,7 +322,7 @@ public class WheelOptions<T> {
         wv_option2.setTypeface(font);
         wv_option3.setTypeface(font);
         if (wv_option4 != null)
-        wv_option4.setTypeface(font);
+            wv_option4.setTypeface(font);
     }
 
     /**
@@ -407,7 +415,7 @@ public class WheelOptions<T> {
         wv_option2.setDividerColor(dividerColor);
         wv_option3.setDividerColor(dividerColor);
         if (wv_option4 != null)
-        wv_option4.setDividerColor(dividerColor);
+            wv_option4.setDividerColor(dividerColor);
     }
 
     /**
@@ -420,7 +428,7 @@ public class WheelOptions<T> {
         wv_option2.setDividerType(dividerType);
         wv_option3.setDividerType(dividerType);
         if (wv_option4 != null)
-        wv_option4.setDividerType(dividerType);
+            wv_option4.setDividerType(dividerType);
     }
 
     /**
@@ -433,7 +441,7 @@ public class WheelOptions<T> {
         wv_option2.setTextColorCenter(textColorCenter);
         wv_option3.setTextColorCenter(textColorCenter);
         if (wv_option4 != null)
-        wv_option4.setTextColorCenter(textColorCenter);
+            wv_option4.setTextColorCenter(textColorCenter);
     }
 
     /**
@@ -446,7 +454,7 @@ public class WheelOptions<T> {
         wv_option2.setTextColorOut(textColorOut);
         wv_option3.setTextColorOut(textColorOut);
         if (wv_option4 != null)
-        wv_option4.setTextColorOut(textColorOut);
+            wv_option4.setTextColorOut(textColorOut);
     }
 
     /**
@@ -459,7 +467,7 @@ public class WheelOptions<T> {
         wv_option2.isCenterLabel(isCenterLabel);
         wv_option3.isCenterLabel(isCenterLabel);
         if (wv_option4 != null)
-        wv_option4.isCenterLabel(isCenterLabel);
+            wv_option4.isCenterLabel(isCenterLabel);
     }
 
     public void setOptionsSelectChangeListener(OnOptionsSelectChangeListener optionsSelectChangeListener) {
@@ -480,7 +488,7 @@ public class WheelOptions<T> {
         wv_option2.setItemsVisibleCount(itemsVisible);
         wv_option3.setItemsVisibleCount(itemsVisible);
         if (wv_option4 != null)
-        wv_option4.setItemsVisibleCount(itemsVisible);
+            wv_option4.setItemsVisibleCount(itemsVisible);
     }
 
     public void setAlphaGradient(boolean isAlphaGradient) {
@@ -488,6 +496,6 @@ public class WheelOptions<T> {
         wv_option2.setAlphaGradient(isAlphaGradient);
         wv_option3.setAlphaGradient(isAlphaGradient);
         if (wv_option4 != null)
-        wv_option4.setAlphaGradient(isAlphaGradient);
+            wv_option4.setAlphaGradient(isAlphaGradient);
     }
 }
