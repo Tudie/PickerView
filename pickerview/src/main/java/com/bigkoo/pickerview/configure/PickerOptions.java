@@ -25,7 +25,7 @@ public class PickerOptions {
 
     //constant
     private static final int PICKER_VIEW_BTN_COLOR_NORMAL = 0xFF057dff;
-    private static final int PICKER_VIEW_BG_COLOR_TITLE = 0xFFf5f5f5;
+    private static final int PICKER_VIEW_BG_COLOR_TITLE = 0xFFffffff;
     private static final int PICKER_VIEW_COLOR_TITLE = 0xFF000000;
     private static final int PICKER_VIEW_BG_COLOR_DEFAULT = 0xFFFFFFFF;
 
