@@ -181,12 +181,34 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     public void setNPicker(List<T> options1Items,
                            List<T> options2Items,
+                           String textstr) {
+
+        wheelOptions.setLinkage(false);
+        wheelOptions.setNPicker(options1Items, options2Items, null, null, textstr, null, null);
+        reSetCurrentItems();
+    }
+
+    public void setNPicker(List<T> options1Items,
+                           List<T> options2Items,
                            List<T> options3Items,
                            List<T> options4Items,
                            String textstr) {
 
         wheelOptions.setLinkage(false);
-        wheelOptions.setNPicker(options1Items, options2Items, options3Items, options4Items, textstr);
+        wheelOptions.setNPicker(options1Items, options2Items, options3Items, options4Items, null, textstr, null);
+        reSetCurrentItems();
+    }
+
+    public void setNPicker(List<T> options1Items,
+                           List<T> options2Items,
+                           List<T> options3Items,
+                           List<T> options4Items,
+                           String text1str,
+                           String text2str,
+                           String text3str) {
+
+        wheelOptions.setLinkage(false);
+        wheelOptions.setNPicker(options1Items, options2Items, options3Items, options4Items, text1str, text2str, text3str);
         reSetCurrentItems();
     }
 
