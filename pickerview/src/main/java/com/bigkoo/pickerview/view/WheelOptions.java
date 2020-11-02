@@ -18,7 +18,9 @@ public class WheelOptions<T> {
     private WheelView wv_option2;
     private WheelView wv_option3;
     private WheelView wv_option4;
-    private TextView texttv;
+    private TextView text1tv;
+    private TextView text2tv;
+    private TextView text3tv;
 
     private List<T> mOptions1Items;
     private List<List<T>> mOptions2Items;
@@ -48,7 +50,9 @@ public class WheelOptions<T> {
         wv_option2 = (WheelView) view.findViewById(R.id.options2);
         wv_option3 = (WheelView) view.findViewById(R.id.options3);
         wv_option4 = (WheelView) view.findViewById(R.id.options4);
-        texttv = (TextView) view.findViewById(R.id.texttv);
+        text1tv = (TextView) view.findViewById(R.id.text1tv);
+        text2tv = (TextView) view.findViewById(R.id.text2tv);
+        text3tv = (TextView) view.findViewById(R.id.text3tv);
     }
 
     public void setPicker(List<T> options1Items) {
@@ -174,14 +178,16 @@ public class WheelOptions<T> {
 
     //不联动情况下
     public void setNPicker(List<T> options1Items) {
-        setNPicker(options1Items, null, null, null, null);
+        setNPicker(options1Items, null, null, null, null,null,null);
     }
 
     public void setNPicker(List<T> options1Items, List<T> options2Items) {
-        setNPicker(options1Items, options2Items, null, null, null);
+        setNPicker(options1Items, options2Items, null, null, null,null,null);
     }
-
-    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items, List<T> options4Items, String textstr) {
+    public void setNPicker(List<T> options1Items, List<T> options2Items, String text1str) {
+        setNPicker(options1Items, options2Items, null, null, text1str,null,null);
+    }
+    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items, List<T> options4Items, String text1str, String text2str, String text3str) {
 
         // 选项1
         wv_option1.setAdapter(new ArrayWheelAdapter<>(options1Items));// 设置显示数据
@@ -253,11 +259,23 @@ public class WheelOptions<T> {
                 });
             }
         }
-        if (textstr == null || texttv == null) {
-            texttv.setVisibility(View.GONE);
+        if (text1str == null || text1tv == null) {
+            text1tv.setVisibility(View.GONE);
         } else {
-            texttv.setText(textstr);
-            texttv.setVisibility(View.VISIBLE);
+            text1tv.setText(text1str);
+            text1tv.setVisibility(View.VISIBLE);
+        }
+        if (text2str == null || text2tv == null) {
+            text2tv.setVisibility(View.GONE);
+        } else {
+            text2tv.setText(text2str);
+            text2tv.setVisibility(View.VISIBLE);
+        }
+        if (text3str == null || text3tv == null) {
+            text3tv.setVisibility(View.GONE);
+        } else {
+            text3tv.setText(text3str);
+            text3tv.setVisibility(View.VISIBLE);
         }
     }
 

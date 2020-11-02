@@ -24,6 +24,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
+        <TextView
+            android:id="@+id/text1tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="~"
+            android:visibility="gone"
+            android:textColor="#222222"
+            android:textSize="14sp" />
+
         <com.contrarywind.view.WheelView
             android:id="@+id/options2"
             android:layout_width="0dp"
@@ -31,20 +42,32 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/texttv"
-            android:textSize="14sp"
-            android:textColor="#222222"
+            android:id="@+id/text2tv"
             android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_weight="0.5"
+            android:visibility="gone"
             android:layout_height="match_parent"
-            android:text="~"/>
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="~"
+            android:textColor="#222222"
+            android:textSize="14sp" />
 
         <com.contrarywind.view.WheelView
             android:id="@+id/options3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text3tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="~"
+            android:textColor="#222222"
+            android:textSize="14sp" />
 
         <com.contrarywind.view.WheelView
             android:id="@+id/options4"
