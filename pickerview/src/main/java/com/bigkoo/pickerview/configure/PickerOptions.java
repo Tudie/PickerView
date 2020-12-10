@@ -49,6 +49,8 @@ public class PickerOptions {
     public boolean cyclic2 = false;
     public boolean cyclic3 = false;
     public boolean cyclic4 = false;
+    public boolean istoast = true;
+    public String toast = "结束时间需大于开始时间";
 
     public boolean isRestoreItem = false; //切换时，还原第一项
 

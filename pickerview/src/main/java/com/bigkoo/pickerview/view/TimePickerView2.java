@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.configure.PickerOptions;
@@ -19,6 +20,7 @@ import java.util.Date;
 
 public class TimePickerView2 extends BasePickerView implements View.OnClickListener {
 
+    private Context context; //自定义控件
     private WheelTime2 wheelTime; //自定义控件
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -30,6 +32,7 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
     }
 
     private void initView(Context context) {
+        this.context=context;
         setDialogOutSideCancelable();
         initViews();
         initAnim();
@@ -86,7 +89,7 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
                     try {
                         Date date = WheelTime2.dateFormat.parse(wheelTime.getTime());
                         Date date2 = WheelTime2.dateFormat.parse(wheelTime.getTime2());
-                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date,date2);
+                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date, date2);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -222,8 +225,9 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
             if (mPickerOptions.cancelListener != null) {
                 mPickerOptions.cancelListener.onClick(v);
             }
+            dismiss();
         }
-        dismiss();
+
     }
 
     public void returnData() {
@@ -231,11 +235,40 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
                 Date date2 = WheelTime.dateFormat.parse(wheelTime.getTime2());
-                mPickerOptions.timeSelectListener.onTimeSelect(date, date2,clickView);
+                if (mPickerOptions.istoast){
+                    if (timeCompare(date,date2)){
+                        mPickerOptions.timeSelectListener.onTimeSelect(date, date2, clickView);
+                        dismiss();
+                    }else {
+                        Toast.makeText(context,mPickerOptions.toast,Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    mPickerOptions.timeSelectListener.onTimeSelect(date, date2, clickView);
+                    dismiss();
+                }
+
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 判断2个时间大小
+     *
+     * @return
+     */
+    public boolean timeCompare(Date date1, Date date2) {
+        try {
+            if (date2.getTime() > date1.getTime()) {
+                //结束时间大于开始时间
+                return true;
+            }
+        } catch (Exception e) {
+
+        }
+        return false;
     }
 
     /**

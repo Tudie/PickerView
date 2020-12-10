@@ -41,7 +41,12 @@ public class TimePickerBuilder {
         mPickerOptions.cancelListener = cancelListener;
         return this;
     }
-
+    public TimePickerBuilder setIsToast(boolean istoast ,String toast){
+        mPickerOptions.istoast = istoast;
+        if (toast!=null)
+            mPickerOptions.toast = toast;
+        return this;
+    }
     /**
      * new boolean[]{true, true, true, false, false, false}
      * control the "year","month","day","hours","minutes","seconds " display or hide.
