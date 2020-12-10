@@ -10,5 +10,5 @@ import java.util.Date;
 
 public interface OnTimeSelectListener {
 
-    void onTimeSelect(Date date, View v);
+    void onTimeSelect(Date date, Date date2, View v);
 }

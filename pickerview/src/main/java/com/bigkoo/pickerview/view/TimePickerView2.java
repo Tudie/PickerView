@@ -17,18 +17,13 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * 时间选择器
- * Created by Sai on 15/11/22.
- * Updated by XiaoSong on 2017-2-22.
- */
-public class TimePickerView extends BasePickerView implements View.OnClickListener {
+public class TimePickerView2 extends BasePickerView implements View.OnClickListener {
 
-    private WheelTime wheelTime; //自定义控件
+    private WheelTime2 wheelTime; //自定义控件
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
 
-    public TimePickerView(PickerOptions pickerOptions) {
+    public TimePickerView2(PickerOptions pickerOptions) {
         super(pickerOptions.context);
         mPickerOptions = pickerOptions;
         initView(pickerOptions.context);
@@ -40,7 +35,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         initAnim();
 
         if (mPickerOptions.customListener == null) {
-            LayoutInflater.from(context).inflate(R.layout.pickerview_time, contentContainer);
+            LayoutInflater.from(context).inflate(R.layout.pickerview_time2, contentContainer);
 
             //顶部标题
             TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -83,14 +78,15 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
     private void initWheelTime(LinearLayout timePickerView) {
-        wheelTime = new WheelTime(timePickerView, mPickerOptions.type, mPickerOptions.textGravity, mPickerOptions.textSizeContent);
+        wheelTime = new WheelTime2(timePickerView, mPickerOptions.type, mPickerOptions.textGravity, mPickerOptions.textSizeContent);
         if (mPickerOptions.timeSelectChangeListener != null) {
             wheelTime.setSelectChangeCallback(new ISelectTimeCallback() {
                 @Override
                 public void onTimeSelectChanged() {
                     try {
-                        Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date,date);
+                        Date date = WheelTime2.dateFormat.parse(wheelTime.getTime());
+                        Date date2 = WheelTime2.dateFormat.parse(wheelTime.getTime2());
+                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date,date2);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -130,6 +126,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         setTime();
         wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day
+                , mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
+        wheelTime.setLabels2(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day
                 , mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
         wheelTime.setTextXOffset(mPickerOptions.x_offset_year, mPickerOptions.x_offset_month, mPickerOptions.x_offset_day,
                 mPickerOptions.x_offset_hours, mPickerOptions.x_offset_minutes, mPickerOptions.x_offset_seconds);
@@ -232,7 +230,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (mPickerOptions.timeSelectListener != null) {
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                mPickerOptions.timeSelectListener.onTimeSelect(date,date, clickView);
+                Date date2 = WheelTime.dateFormat.parse(wheelTime.getTime2());
+                mPickerOptions.timeSelectListener.onTimeSelect(date, date2,clickView);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -270,6 +269,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
             wheelTime.setLunarMode(lunar);
             wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day,
+                    mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
+            wheelTime.setLabels2(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day,
                     mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
             wheelTime.setPicker(year, month, day, hours, minute, seconds);
         } catch (ParseException e) {

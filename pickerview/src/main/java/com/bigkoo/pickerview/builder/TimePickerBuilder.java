@@ -11,6 +11,7 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.bigkoo.pickerview.view.TimePickerView2;
 import com.contrarywind.view.WheelView;
 
 import java.util.Calendar;
@@ -312,4 +313,9 @@ public class TimePickerBuilder {
     public TimePickerView build() {
         return new TimePickerView(mPickerOptions);
     }
+
+    public TimePickerView2 build2() {
+        return new TimePickerView2(mPickerOptions);
+    }
+
 }

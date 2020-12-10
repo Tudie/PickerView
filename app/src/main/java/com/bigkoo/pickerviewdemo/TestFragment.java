@@ -59,7 +59,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
         //时间选择器
         pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
+            public void onTimeSelect(Date date,Date date2, View v) {//选中事件回调
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
                 /*btn_Time.setText(getTime(date));*/
                 Button btn = (Button) v;
