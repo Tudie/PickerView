@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
-                .setDate(CalenderTime("2020-10-12", "yyyy-MM-dd"), CalenderTime("2020-12-12", "yyyy-MM-dd"))
+                .setDate(CalenderTime("2021-10-12", "yyyy-MM-dd"), CalenderTime("2023-12-26", "yyyy-MM-dd"))
                 .setIsToast(true, "nihoa ")
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。

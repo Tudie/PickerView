@@ -216,7 +216,6 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
             minute = mPickerOptions.date.get(Calendar.MINUTE);
             seconds = mPickerOptions.date.get(Calendar.SECOND);
         }
-
         if (mPickerOptions.date2 == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
             year2 = calendar.get(Calendar.YEAR);
@@ -226,12 +225,12 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
             minute2 = calendar.get(Calendar.MINUTE);
             seconds2 = calendar.get(Calendar.SECOND);
         } else {
-            year2 = mPickerOptions.date.get(Calendar.YEAR);
-            month2 = mPickerOptions.date.get(Calendar.MONTH);
-            day2 = mPickerOptions.date.get(Calendar.DAY_OF_MONTH);
-            hours2 = mPickerOptions.date.get(Calendar.HOUR_OF_DAY);
-            minute2 = mPickerOptions.date.get(Calendar.MINUTE);
-            seconds2 = mPickerOptions.date.get(Calendar.SECOND);
+            year2 = mPickerOptions.date2.get(Calendar.YEAR);
+            month2 = mPickerOptions.date2.get(Calendar.MONTH);
+            day2 = mPickerOptions.date2.get(Calendar.DAY_OF_MONTH);
+            hours2 = mPickerOptions.date2.get(Calendar.HOUR_OF_DAY);
+            minute2 = mPickerOptions.date2.get(Calendar.MINUTE);
+            seconds2 = mPickerOptions.date2.get(Calendar.SECOND);
         }
 
         wheelTime.setPicker(year, month, day, hours, minute, seconds,year2, month2, day2, hours2, minute2, seconds2);
