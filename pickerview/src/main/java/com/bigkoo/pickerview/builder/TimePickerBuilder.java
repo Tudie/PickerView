@@ -162,7 +162,11 @@ public class TimePickerBuilder {
         mPickerOptions.date = date;
         return this;
     }
-
+    public TimePickerBuilder setDate(Calendar date,Calendar date2) {
+        mPickerOptions.date = date;
+        mPickerOptions.date2 = date2;
+        return this;
+    }
     public TimePickerBuilder setLayoutRes(int res, CustomListener customListener) {
         mPickerOptions.layoutRes = res;
         mPickerOptions.customListener = customListener;

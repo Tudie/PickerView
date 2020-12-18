@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
-            pvTime.setDate(CalenderTime("2020-10-12", "yyyy-MM-dd"), CalenderTime("2020-12-12", "yyyy-MM-dd"));
+//            pvTime.setDate(CalenderTime("2020-10-12", "yyyy-MM-dd"), CalenderTime("2020-12-12", "yyyy-MM-dd"));
             /* pvTime.show(); //show timePicker*/
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
+                .setDate(CalenderTime("2020-10-12", "yyyy-MM-dd"), CalenderTime("2020-12-12", "yyyy-MM-dd"))
                 .setIsToast(true, "nihoa ")
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
