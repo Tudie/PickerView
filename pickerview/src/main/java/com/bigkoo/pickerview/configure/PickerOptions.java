@@ -59,6 +59,7 @@ public class PickerOptions {
     public boolean[] type = new boolean[]{true, true, true, false, false, false};//显示类型，默认显示： 年月日
 
     public Calendar date;//当前选中时间
+    public Calendar date2;//当前选中时间
     public Calendar startDate;//开始时间
     public Calendar endDate;//终止时间
     public int startYear;//开始年份

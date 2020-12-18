@@ -32,7 +32,7 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
     }
 
     private void initView(Context context) {
-        this.context=context;
+        this.context = context;
         setDialogOutSideCancelable();
         initViews();
         initAnim();
@@ -155,6 +155,12 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
         setTime();
     }
 
+    public void setDate(Calendar date,Calendar date2) {
+        mPickerOptions.date = date;
+        mPickerOptions.date2 = date2;
+        setTime();
+    }
+
     /**
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
      */
@@ -192,9 +198,8 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
      * 设置选中时间,默认选中当前时间
      */
     private void setTime() {
-        int year, month, day, hours, minute, seconds;
+        int year, month, day, hours, minute, seconds, year2, month2, day2, hours2, minute2, seconds2;
         Calendar calendar = Calendar.getInstance();
-
         if (mPickerOptions.date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
             year = calendar.get(Calendar.YEAR);
@@ -212,7 +217,24 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
             seconds = mPickerOptions.date.get(Calendar.SECOND);
         }
 
-        wheelTime.setPicker(year, month, day, hours, minute, seconds);
+        if (mPickerOptions.date2 == null) {
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            year2 = calendar.get(Calendar.YEAR);
+            month2 = calendar.get(Calendar.MONTH);
+            day2 = calendar.get(Calendar.DAY_OF_MONTH);
+            hours2 = calendar.get(Calendar.HOUR_OF_DAY);
+            minute2 = calendar.get(Calendar.MINUTE);
+            seconds2 = calendar.get(Calendar.SECOND);
+        } else {
+            year2 = mPickerOptions.date.get(Calendar.YEAR);
+            month2 = mPickerOptions.date.get(Calendar.MONTH);
+            day2 = mPickerOptions.date.get(Calendar.DAY_OF_MONTH);
+            hours2 = mPickerOptions.date.get(Calendar.HOUR_OF_DAY);
+            minute2 = mPickerOptions.date.get(Calendar.MINUTE);
+            seconds2 = mPickerOptions.date.get(Calendar.SECOND);
+        }
+
+        wheelTime.setPicker(year, month, day, hours, minute, seconds,year2, month2, day2, hours2, minute2, seconds2);
     }
 
 
@@ -235,14 +257,14 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
                 Date date2 = WheelTime.dateFormat.parse(wheelTime.getTime2());
-                if (mPickerOptions.istoast){
-                    if (timeCompare(date,date2)){
+                if (mPickerOptions.istoast) {
+                    if (timeCompare(date, date2)) {
                         mPickerOptions.timeSelectListener.onTimeSelect(date, date2, clickView);
                         dismiss();
-                    }else {
-                        Toast.makeText(context,mPickerOptions.toast,Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, mPickerOptions.toast, Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     mPickerOptions.timeSelectListener.onTimeSelect(date, date2, clickView);
                     dismiss();
                 }
@@ -305,7 +327,7 @@ public class TimePickerView2 extends BasePickerView implements View.OnClickListe
                     mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
             wheelTime.setLabels2(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day,
                     mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
-            wheelTime.setPicker(year, month, day, hours, minute, seconds);
+            wheelTime.setPicker(year, month, day, hours, minute, seconds,year, month, day, hours, minute, seconds);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -75,19 +75,15 @@ public class WheelTime2 {
         return isLunarCalendar;
     }
 
-    public void setPicker(int year, int month, int day) {
-        this.setPicker(year, month, day, 0, 0, 0);
-    }
-
-    public void setPicker(int year, final int month, int day, int h, int m, int s) {
+    public void setPicker(int year, final int month, int day, int h, int m, int s,int year2, final int month2, int day2, int h2, int m2, int s2) {
         if (isLunarCalendar) {
             int[] lunar = LunarCalendar.solarToLunar(year, month + 1, day);
-            setLunar(lunar[0], lunar[1] - 1, lunar[2], lunar[3] == 1, h, m, s);
+            int[] lunar2 = LunarCalendar.solarToLunar(year2, month2 + 1, day2);
+            setLunar(lunar[0], lunar[1] - 1, lunar[2], lunar[3] == 1, h, m, s,lunar2[0], lunar2[1] - 1, lunar2[2], lunar2[3] == 1, h2, m2, s2);
         } else {
-            setSolar(year, month, day, h, m, s);
+            setSolar(year, month, day, h, m, s,year2, month2, day2, h2, m2, s2);
         }
     }
-
     /**
      * 设置农历
      *
@@ -98,7 +94,7 @@ public class WheelTime2 {
      * @param m
      * @param s
      */
-    private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s) {
+    private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s,int year2, final int month2, int day2, boolean isLeap2, int h2, int m2, int s2) {
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new ArrayWheelAdapter(ChinaDate.getYears(startYear, endYear)));// 设置"年"的显示数据
@@ -127,13 +123,13 @@ public class WheelTime2 {
         wv_month.setGravity(gravity);
 
         wv_month2 = (WheelView) view.findViewById(R.id.month2);
-        wv_month2.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year)));
+        wv_month2.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year2)));
         wv_month2.setLabel("");
 
         if (leapMonth != 0 && (month > leapMonth - 1 || isLeap)) { //选中月是闰月或大于闰月
-            wv_month2.setCurrentItem(month + 1);
+            wv_month2.setCurrentItem(month2+ 1);
         } else {
-            wv_month2.setCurrentItem(month);
+            wv_month2.setCurrentItem(month2);
         }
 
         wv_month2.setGravity(gravity);
@@ -153,12 +149,12 @@ public class WheelTime2 {
         wv_day2 = (WheelView) view.findViewById(R.id.day2);
         // 判断大小月及是否闰年,用来确定"日"的数据
         if (ChinaDate.leapMonth(year) == 0) {
-            wv_day2.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year, month))));
+            wv_day2.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year2, month2))));
         } else {
-            wv_day2.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year))));
+            wv_day2.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year2))));
         }
         wv_day2.setLabel("");
-        wv_day2.setCurrentItem(day - 1);
+        wv_day2.setCurrentItem(day2 - 1);
         wv_day2.setGravity(gravity);
 
         wv_hours = (WheelView) view.findViewById(R.id.hour);
@@ -170,19 +166,19 @@ public class WheelTime2 {
         wv_hours2 = (WheelView) view.findViewById(R.id.hour2);
         wv_hours2.setAdapter(new NumericWheelAdapter(0, 23));
         //wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
-        wv_hours2.setCurrentItem(h);
+        wv_hours2.setCurrentItem(h2);
         wv_hours2.setGravity(gravity);
 
         wv_minutes = (WheelView) view.findViewById(R.id.min);
         wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
         //wv_minutes.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
-        wv_minutes.setCurrentItem(m);
+        wv_minutes.setCurrentItem(m2);
         wv_minutes.setGravity(gravity);
 
         wv_minutes2 = (WheelView) view.findViewById(R.id.min);
         wv_minutes2.setAdapter(new NumericWheelAdapter(0, 59));
         //wv_minutes.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
-        wv_minutes2.setCurrentItem(m);
+        wv_minutes2.setCurrentItem(m2);
         wv_minutes2.setGravity(gravity);
 
         wv_seconds = (WheelView) view.findViewById(R.id.second);
@@ -194,7 +190,7 @@ public class WheelTime2 {
         wv_seconds2 = (WheelView) view.findViewById(R.id.second2);
         wv_seconds2.setAdapter(new NumericWheelAdapter(0, 59));
         //wv_seconds.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
-        wv_seconds2.setCurrentItem(m);
+        wv_seconds2.setCurrentItem(m2);
         wv_seconds2.setGravity(gravity);
 
         // 添加"年"监听
@@ -372,7 +368,7 @@ public class WheelTime2 {
      * @param m
      * @param s
      */
-    private void setSolar(int year, final int month, int day, int h, int m, int s) {
+    private void setSolar(int year, final int month, int day, int h, int m, int s,int year2, final int month2, int day2, int h2, int m2, int s2) {
         // 添加大小月月份并将其转换为list,方便之后的判断
         String[] months_big = {"1", "3", "5", "7", "8", "10", "12"};
         String[] months_little = {"4", "6", "9", "11"};
@@ -381,7 +377,7 @@ public class WheelTime2 {
         final List<String> list_little = Arrays.asList(months_little);
 
         currentYear = year;
-        currentYear2 = year;
+        currentYear2 = year2;
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new NumericWheelAdapter(startYear, endYear));// 设置"年"的显示数据
@@ -394,7 +390,7 @@ public class WheelTime2 {
         wv_year2.setAdapter(new NumericWheelAdapter(startYear, endYear));// 设置"年"的显示数据
 
 
-        wv_year2.setCurrentItem(year - startYear);// 初始化时显示的数据
+        wv_year2.setCurrentItem(year2 - startYear);// 初始化时显示的数据
         wv_year2.setGravity(gravity);
         // 月
         wv_month = (WheelView) view.findViewById(R.id.month);
@@ -418,18 +414,18 @@ public class WheelTime2 {
         wv_month2 = (WheelView) view.findViewById(R.id.month2);
         if (startYear == endYear) {//开始年等于终止年
             wv_month2.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
-            wv_month2.setCurrentItem(month + 1 - startMonth);
+            wv_month2.setCurrentItem(month2 + 1 - startMonth);
         } else if (year == startYear) {
             //起始日期的月份控制
             wv_month2.setAdapter(new NumericWheelAdapter(startMonth, 12));
-            wv_month2.setCurrentItem(month + 1 - startMonth);
+            wv_month2.setCurrentItem(month2 + 1 - startMonth);
         } else if (year == endYear) {
             //终止日期的月份控制
             wv_month2.setAdapter(new NumericWheelAdapter(1, endMonth));
-            wv_month2.setCurrentItem(month);
+            wv_month2.setCurrentItem(month2);
         } else {
             wv_month2.setAdapter(new NumericWheelAdapter(1, 12));
-            wv_month2.setCurrentItem(month);
+            wv_month2.setCurrentItem(month2);
         }
         wv_month2.setGravity(gravity);
 
@@ -520,14 +516,14 @@ public class WheelTime2 {
 
 
         wv_day2 = (WheelView) view.findViewById(R.id.day2);
-
+        boolean leapYear2 = (year2 % 4 == 0 && year2 % 100 != 0) || year2 % 400 == 0;
         if (startYear == endYear && startMonth == endMonth) {
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (list_big.contains(String.valueOf(month2 + 1))) {
                 if (endDay > 31) {
                     endDay = 31;
                 }
                 wv_day2.setAdapter(new NumericWheelAdapter(startDay, endDay));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (list_little.contains(String.valueOf(month2 + 1))) {
                 if (endDay > 30) {
                     endDay = 30;
                 }
@@ -546,28 +542,28 @@ public class WheelTime2 {
                     wv_day2.setAdapter(new NumericWheelAdapter(startDay, endDay));
                 }
             }
-            wv_day2.setCurrentItem(day - startDay);
-        } else if (year == startYear && month + 1 == startMonth) {
+            wv_day2.setCurrentItem(day2 - startDay);
+        } else if (year2 == startYear && month2 + 1 == startMonth) {
             // 起始日期的天数控制
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (list_big.contains(String.valueOf(month2 + 1))) {
 
                 wv_day2.setAdapter(new NumericWheelAdapter(startDay, 31));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (list_little.contains(String.valueOf(month2 + 1))) {
 
                 wv_day2.setAdapter(new NumericWheelAdapter(startDay, 30));
             } else {
                 // 闰年 29，平年 28
-                wv_day2.setAdapter(new NumericWheelAdapter(startDay, leapYear ? 29 : 28));
+                wv_day2.setAdapter(new NumericWheelAdapter(startDay, leapYear2 ? 29 : 28));
             }
-            wv_day2.setCurrentItem(day - startDay);
+            wv_day2.setCurrentItem(day2 - startDay);
         } else if (year == endYear && month + 1 == endMonth) {
             // 终止日期的天数控制
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (list_big.contains(String.valueOf(month2 + 1))) {
                 if (endDay > 31) {
                     endDay = 31;
                 }
                 wv_day2.setAdapter(new NumericWheelAdapter(1, endDay));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (list_little.contains(String.valueOf(month2 + 1))) {
                 if (endDay > 30) {
                     endDay = 30;
                 }
@@ -586,18 +582,18 @@ public class WheelTime2 {
                     wv_day2.setAdapter(new NumericWheelAdapter(1, endDay));
                 }
             }
-            wv_day2.setCurrentItem(day - 1);
+            wv_day2.setCurrentItem(day2 - 1);
         } else {
             // 判断大小月及是否闰年,用来确定"日"的数据
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (list_big.contains(String.valueOf(month2 + 1))) {
                 wv_day2.setAdapter(new NumericWheelAdapter(1, 31));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (list_little.contains(String.valueOf(month2 + 1))) {
                 wv_day2.setAdapter(new NumericWheelAdapter(1, 30));
             } else {
                 // 闰年 29，平年 28
-                wv_day2.setAdapter(new NumericWheelAdapter(startDay, leapYear ? 29 : 28));
+                wv_day2.setAdapter(new NumericWheelAdapter(startDay, leapYear2 ? 29 : 28));
             }
-            wv_day2.setCurrentItem(day - 1);
+            wv_day2.setCurrentItem(day2 - 1);
         }
 
         wv_day2.setGravity(gravity);
@@ -612,7 +608,7 @@ public class WheelTime2 {
         wv_hours2 = (WheelView) view.findViewById(R.id.hour2);
         wv_hours2.setAdapter(new NumericWheelAdapter(0, 23));
 
-        wv_hours2.setCurrentItem(h);
+        wv_hours2.setCurrentItem(h2);
         wv_hours2.setGravity(gravity);
         //分
         wv_minutes = (WheelView) view.findViewById(R.id.min);
@@ -624,7 +620,7 @@ public class WheelTime2 {
         wv_minutes2 = (WheelView) view.findViewById(R.id.min2);
         wv_minutes2.setAdapter(new NumericWheelAdapter(0, 59));
 
-        wv_minutes2.setCurrentItem(m);
+        wv_minutes2.setCurrentItem(m2);
         wv_minutes2.setGravity(gravity);
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
@@ -636,7 +632,7 @@ public class WheelTime2 {
         wv_seconds2 = (WheelView) view.findViewById(R.id.second2);
         wv_seconds2.setAdapter(new NumericWheelAdapter(0, 59));
 
-        wv_seconds2.setCurrentItem(s);
+        wv_seconds2.setCurrentItem(s2);
         wv_seconds2.setGravity(gravity);
 
         // 添加"年"监听

@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_CustomOptions;
     private Button btn_CustomTime;
 
-    private TimePickerView  pvCustomTime, pvCustomLunar;
-    TimePickerView3 pvTime;
+    private TimePickerView pvCustomTime, pvCustomLunar;
+    TimePickerView2 pvTime;
     private OptionsPickerView pvOptions, pvCustomOptions, pvNoLinkOptions;
     private ArrayList<CardBean> cardItem = new ArrayList<>();
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
-            // pvTime.setDate(Calendar.getInstance());
+            pvTime.setDate(CalenderTime("2020-10-12", "yyyy-MM-dd"), CalenderTime("2020-12-12", "yyyy-MM-dd"));
             /* pvTime.show(); //show timePicker*/
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //时间选择器 ，自定义布局
         pvCustomLunar = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date,Date date2, View v) {//选中事件回调
+            public void onTimeSelect(Date date, Date date2, View v) {//选中事件回调
                 Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
             }
         })
@@ -204,19 +204,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initTimePicker() {//Dialog 模式下，在底部弹出
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date,Date date2, View v) {
-                Toast.makeText(MainActivity.this, getTime(date)+getTime(date2), Toast.LENGTH_SHORT).show();
-                Log.i("pvTime", "onTimeSelect"+getTime(date)+getTime(date2));
+            public void onTimeSelect(Date date, Date date2, View v) {
+                Toast.makeText(MainActivity.this, getTime(date) + getTime(date2), Toast.LENGTH_SHORT).show();
+                Log.i("pvTime", "onTimeSelect" + getTime(date) + getTime(date2));
 
             }
         })
                 .setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
                     @Override
-                    public void onTimeSelectChanged(Date date,Date date2) {
+                    public void onTimeSelectChanged(Date date, Date date2) {
                         Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
-                .setIsToast(true,"nihoa ")
+                .setIsToast(true, "nihoa ")
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .addOnCancelClickListener(new View.OnClickListener() {
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setItemVisibleCount(5) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
                 .setLineSpacingMultiplier(2.0f)
                 .isAlphaGradient(true)
-                .build3();
+                .build2();
 
         Dialog mDialog = pvTime.getDialog();
         if (mDialog != null) {
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date,Date date2, View v) {//选中事件回调
+            public void onTimeSelect(Date date, Date date2, View v) {//选中事件回调
                 btn_CustomTime.setText(getTime(date));
             }
         })
@@ -321,6 +321,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
 
+    public Calendar CalenderTime(String time, String timetype) {
+        Calendar cal = Calendar.getInstance();
+        if (time != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(timetype);
+            try {
+                Date data = dateFormat.parse(time);//时间
+                if (data != null) {
+                    cal.setTime(data);
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        return cal;
+    }
+
+    public Calendar CalenderTime(Date time) {
+        Calendar cal = Calendar.getInstance();
+        if (time!=null) {
+            cal.setTime(time);
+        }
+        return cal;
+    }
+
     private void initOptionPicker() {//条件选择器初始化
 
         /**
@@ -329,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
-            public void onOptionsSelect(int options1, int options2, int options3,int options4, View v) {
+            public void onOptionsSelect(int options1, int options2, int options3, int options4, View v) {
                 //返回的分别是三个级别的选中位置
                 String tx = options1Items.get(options1).getPickerViewText()
                         + options2Items.get(options1).get(options2)
@@ -376,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
         pvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3,int options4, View v) {
+            public void onOptionsSelect(int options1, int option2, int options3, int options4, View v) {
                 //返回的分别是三个级别的选中位置
                 String tx = cardItem.get(options1).getPickerViewText();
                 btn_CustomOptions.setText(tx);
@@ -431,7 +455,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String str = "options1:" + list1.get(options1)
                         + "\noptions2:" + list2.get(options2)
                         + "\noptions3:" + list3.get(options3)
-                + "\noptions4:" + list4.get(options4);
+                        + "\noptions4:" + list4.get(options4);
 
                 Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
             }
@@ -439,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
                     @Override
                     public void onOptionsSelectChanged(int options1, int options2, int options3, int options4) {
-                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3+ "\noptions4: " + options4;
+                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3 + "\noptions4: " + options4;
                         Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -447,8 +471,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // .setSelectOptions(0, 1, 1)
                 .setDividerColor(getResources().getColor(R.color.colorPrimary))
                 .build();
-        pvNoLinkOptions.setNPicker(list1, list2, list3,list4,"~");
-        pvNoLinkOptions.setSelectOptions(0, 1, 1,0);
+        pvNoLinkOptions.setNPicker(list1, list2, list3, list4, "~");
+        pvNoLinkOptions.setSelectOptions(0, 1, 1, 0);
 
 
     }
@@ -518,7 +542,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computer.add("Lenovo");
         computer.add("Apple");
         computer.add("HP");
-        
+
         list1.add("11");
         list1.add("12");
         list1.add("13");
@@ -541,8 +565,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         list4.add("45");
         list4.add("46");
         list4.add("47");
-        
-        
+
+
     }
 
 }
