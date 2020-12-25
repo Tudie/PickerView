@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,7 +31,8 @@ import java.util.List;
 public class JsonDataActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private List<JsonBean> options1Items = new ArrayList<>();
+    private List<JsonBean> optionsItems = new ArrayList<>();
+    private List<String> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
     private Thread thread;
@@ -107,7 +109,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
             public void onOptionsSelect(int options1, int options2, int options3,int options4, View v) {
                 //返回的分别是三个级别的选中位置
                 String opt1tx = options1Items.size() > 0 ?
-                        options1Items.get(options1).getPickerViewText() : "";
+                        options1Items.get(options1) : "";
 
                 String opt2tx = options2Items.size() > 0
                         && options2Items.get(options1).size() > 0 ?
@@ -132,6 +134,8 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
         pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
+        pvOptions.setSelectOptions("内蒙古","包头市","青山区");
+//        pvOptions.setSelectOptions(1,1,2);
         pvOptions.show();
     }
 
@@ -152,7 +156,6 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
          * 注意：如果是添加的JavaBean实体，则实体类需要实现 IPickerViewData 接口，
          * PickerView会通过getPickerViewText方法获取字符串显示出来。
          */
-        options1Items = jsonBean;
 
         for (int i = 0; i < jsonBean.size(); i++) {//遍历省份
             ArrayList<String> cityList = new ArrayList<>();//该省的城市列表（第二级）
@@ -164,16 +167,10 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 ArrayList<String> city_AreaList = new ArrayList<>();//该城市的所有地区列表
 
                 //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
-                /*if (jsonBean.get(i).getCityList().get(c).getArea() == null
-                        || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
-                    city_AreaList.add("");
-                } else {
-                    city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
-                }*/
                 city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
                 province_AreaList.add(city_AreaList);//添加该省所有地区数据
             }
-
+            options1Items.add(jsonBean.get(i).getName());
             /**
              * 添加城市数据
              */

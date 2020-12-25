@@ -473,7 +473,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setDividerColor(getResources().getColor(R.color.colorPrimary))
                 .build();
         pvNoLinkOptions.setNPicker(list1, list2, list3, list4, "~");
-        pvNoLinkOptions.setSelectOptions(0, 1, 1, 0);
+        pvNoLinkOptions.setSelectOptions("14", "24", "32", "");
 
 
     }

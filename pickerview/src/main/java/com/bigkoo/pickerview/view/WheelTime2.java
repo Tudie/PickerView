@@ -75,15 +75,16 @@ public class WheelTime2 {
         return isLunarCalendar;
     }
 
-    public void setPicker(int year, final int month, int day, int h, int m, int s,int year2, final int month2, int day2, int h2, int m2, int s2) {
+    public void setPicker(int year, final int month, int day, int h, int m, int s, int year2, final int month2, int day2, int h2, int m2, int s2) {
         if (isLunarCalendar) {
             int[] lunar = LunarCalendar.solarToLunar(year, month + 1, day);
             int[] lunar2 = LunarCalendar.solarToLunar(year2, month2 + 1, day2);
-            setLunar(lunar[0], lunar[1] - 1, lunar[2], lunar[3] == 1, h, m, s,lunar2[0], lunar2[1] - 1, lunar2[2], lunar2[3] == 1, h2, m2, s2);
+            setLunar(lunar[0], lunar[1] - 1, lunar[2], lunar[3] == 1, h, m, s, lunar2[0], lunar2[1] - 1, lunar2[2], lunar2[3] == 1, h2, m2, s2);
         } else {
-            setSolar(year, month, day, h, m, s,year2, month2, day2, h2, m2, s2);
+            setSolar(year, month, day, h, m, s, year2, month2, day2, h2, m2, s2);
         }
     }
+
     /**
      * 设置农历
      *
@@ -94,7 +95,7 @@ public class WheelTime2 {
      * @param m
      * @param s
      */
-    private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s,int year2, final int month2, int day2, boolean isLeap2, int h2, int m2, int s2) {
+    private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s, int year2, final int month2, int day2, boolean isLeap2, int h2, int m2, int s2) {
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new ArrayWheelAdapter(ChinaDate.getYears(startYear, endYear)));// 设置"年"的显示数据
@@ -127,7 +128,7 @@ public class WheelTime2 {
         wv_month2.setLabel("");
 
         if (leapMonth != 0 && (month > leapMonth - 1 || isLeap)) { //选中月是闰月或大于闰月
-            wv_month2.setCurrentItem(month2+ 1);
+            wv_month2.setCurrentItem(month2 + 1);
         } else {
             wv_month2.setCurrentItem(month2);
         }
@@ -368,7 +369,7 @@ public class WheelTime2 {
      * @param m
      * @param s
      */
-    private void setSolar(int year, final int month, int day, int h, int m, int s,int year2, final int month2, int day2, int h2, int m2, int s2) {
+    private void setSolar(int year, final int month, int day, int h, int m, int s, int year2, final int month2, int day2, int h2, int m2, int s2) {
         // 添加大小月月份并将其转换为list,方便之后的判断
         String[] months_big = {"1", "3", "5", "7", "8", "10", "12"};
         String[] months_little = {"4", "6", "9", "11"};
@@ -640,7 +641,7 @@ public class WheelTime2 {
             @Override
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
-                Log.i(">>>>>>>>>>>>>>>>>>> 1 ",">>>>>>>>>>>  "+year_num);
+                Log.i(">>>>>>>>>>>>>>>>>>> 1 ", ">>>>>>>>>>>  " + year_num);
                 currentYear = year_num;
                 int currentMonthItem = wv_month.getCurrentItem();//记录上一次的item位置
                 // 判断大小月及是否闰年,用来确定"日"的数据
@@ -719,7 +720,7 @@ public class WheelTime2 {
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
                 currentYear2 = year_num;
-                Log.i(">>>>>>>>>>>>>>>>>>> 2 ",">>>>>>>>>>>  "+year_num);
+                Log.i(">>>>>>>>>>>>>>>>>>> 2 ", ">>>>>>>>>>>  " + year_num);
                 int currentMonthItem = wv_month2.getCurrentItem();//记录上一次的item位置
                 // 判断大小月及是否闰年,用来确定"日"的数据
                 if (startYear == endYear) {

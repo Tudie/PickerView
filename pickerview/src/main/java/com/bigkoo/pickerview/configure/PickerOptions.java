@@ -43,6 +43,7 @@ public class PickerOptions {
     //options picker
     public String label1, label2, label3,label4;//单位字符
     public int option1, option2, option3,option4;//默认选中项
+    public String options1, options2, options3,options4;//默认选中项
     public int x_offset_one, x_offset_two, x_offset_three,x_offset_fourth;//x轴偏移量
 
     public boolean cyclic1 = false;//是否循环，默认否

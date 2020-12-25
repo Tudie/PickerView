@@ -2,6 +2,7 @@ package com.bigkoo.pickerview.view;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,8 @@ import java.util.List;
 
 /**
  * 条件选择器
- * Created by Sai on 15/11/22.
  */
+
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
 
     private WheelOptions<T> wheelOptions;
@@ -117,22 +118,16 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
      * @param option1
      */
     public void setSelectOptions(int option1) {
-        mPickerOptions.option1 = option1;
-        reSetCurrentItems();
+        setSelectOptions(option1, 0, 0);
     }
 
 
     public void setSelectOptions(int option1, int option2) {
-        mPickerOptions.option1 = option1;
-        mPickerOptions.option2 = option2;
-        reSetCurrentItems();
+        setSelectOptions(option1, option2, 0);
     }
 
     public void setSelectOptions(int option1, int option2, int option3) {
-        mPickerOptions.option1 = option1;
-        mPickerOptions.option2 = option2;
-        mPickerOptions.option3 = option3;
-        reSetCurrentItems();
+        setSelectOptions(option1, option2, option3, 0);
     }
 
     public void setSelectOptions(int option1, int option2, int option3, int option4) {
@@ -143,11 +138,41 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         reSetCurrentItems();
     }
 
+    public void setSelectOptions(String options1) {
+        setSelectOptions(options1, null, null, null);
+    }
+
+    public void setSelectOptions(String options1, String options2) {
+        setSelectOptions(options1, options2, null, null);
+    }
+
+    public void setSelectOptions(String options1, String options2, String options3) {
+        setSelectOptions(options1, options2, options3, null);
+    }
+
+    public void setSelectOptions(String options1, String options2, String options3, String options4) {
+        mPickerOptions.options1 = options1;
+        mPickerOptions.options2 = options2;
+        mPickerOptions.options3 = options3;
+        mPickerOptions.options4 = options4;
+        reSetCurrentItemsstr();
+    }
+
+
     private void reSetCurrentItems() {
         if (wheelOptions != null) {
             wheelOptions.setCurrentItems(mPickerOptions.option1, mPickerOptions.option2, mPickerOptions.option3, mPickerOptions.option4);
         }
     }
+
+    private void reSetCurrentItemsstr() {
+
+        if (wheelOptions != null) {
+            wheelOptions.setCurrentItems(mPickerOptions.options1, mPickerOptions.options2, mPickerOptions.options3, mPickerOptions.options4);
+
+        }
+    }
+
 
     public void setPicker(List<T> optionsItems) {
         this.setPicker(optionsItems, null, null);
@@ -166,6 +191,15 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
 
+    public void setPicker(List<T> options1Items,
+                          List<List<T>> options2Items,
+                          List<List<List<T>>> options3Items,
+                          List<List<List<T>>> options4Items) {
+
+        wheelOptions.setPicker(options1Items, options2Items, options3Items);
+        reSetCurrentItems();
+    }
+
     //不联动情况下调用
     public void setNPicker(List<T> options1Items) {
         setNPicker(options1Items, null, null, null, null);
@@ -182,10 +216,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     public void setNPicker(List<T> options1Items,
                            List<T> options2Items,
                            String textstr) {
-
-        wheelOptions.setLinkage(false);
-        wheelOptions.setNPicker(options1Items, options2Items, null, null, textstr, null, null);
-        reSetCurrentItems();
+        setNPicker(options1Items, options2Items, null, null, textstr, null, null);
     }
 
     public void setNPicker(List<T> options1Items,

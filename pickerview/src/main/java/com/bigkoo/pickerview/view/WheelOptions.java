@@ -1,6 +1,7 @@
 package com.bigkoo.pickerview.view;
 
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,6 +27,10 @@ public class WheelOptions<T> {
     private List<List<T>> mOptions2Items;
     private List<List<List<T>>> mOptions3Items;
     private List<List<List<List<T>>>> mOptions4Items;
+    private List<T> mOptions1Item;
+    private List<T> mOptions2Item;
+    private List<T> mOptions3Item;
+    private List<T> mOptions4Item;
 
     private boolean linkage = true;//默认联动
     private boolean isRestoreItem; //切换时，还原第一项
@@ -56,7 +61,7 @@ public class WheelOptions<T> {
     }
 
     public void setPicker(List<T> options1Items) {
-        setPicker(options1Items, null, null);
+        setPicker(options1Items, null);
     }
 
     public void setPicker(List<T> options1Items, List<List<T>> options2Items) {
@@ -178,17 +183,22 @@ public class WheelOptions<T> {
 
     //不联动情况下
     public void setNPicker(List<T> options1Items) {
-        setNPicker(options1Items, null, null, null, null,null,null);
+        setNPicker(options1Items, null, null, null, null, null, null);
     }
 
     public void setNPicker(List<T> options1Items, List<T> options2Items) {
-        setNPicker(options1Items, options2Items, null, null, null,null,null);
+        setNPicker(options1Items, options2Items, null, null, null, null, null);
     }
-    public void setNPicker(List<T> options1Items, List<T> options2Items, String text1str) {
-        setNPicker(options1Items, options2Items, null, null, text1str,null,null);
-    }
-    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items, List<T> options4Items, String text1str, String text2str, String text3str) {
 
+    public void setNPicker(List<T> options1Items, List<T> options2Items, String text1str) {
+        setNPicker(options1Items, options2Items, null, null, text1str, null, null);
+    }
+
+    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items, List<T> options4Items, String text1str, String text2str, String text3str) {
+        this.mOptions1Item = options1Items;
+        this.mOptions2Item = options2Items;
+        this.mOptions3Item = options3Items;
+        this.mOptions4Item = options4Items;
         // 选项1
         wv_option1.setAdapter(new ArrayWheelAdapter<>(options1Items));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
@@ -394,13 +404,99 @@ public class WheelOptions<T> {
 
     public void setCurrentItems(int option1, int option2, int option3, int option4) {
         if (linkage) {
-            itemSelected(option1, option2, option3);
+            itemSelected(option1, option2, option3, option4);
         } else {
             wv_option1.setCurrentItem(option1);
             wv_option2.setCurrentItem(option2);
             wv_option3.setCurrentItem(option3);
             wv_option4.setCurrentItem(option4);
         }
+    }
+
+    public void setCurrentItems(String options1, String options2, String options3, String options4) {
+        if (linkage) {
+            int option1 = 0;
+            int option2 = 0;
+            int option3 = 0;
+            int option4 = 0;
+            try {
+                for (int i = 0; i < Legth(mOptions1Items); i++) {
+                    if (("" + options1).equals(mOptions1Items.get(i) + "")) {
+                        option1 = i;
+                        if (options2 != null && Legth(mOptions2Items) > i) {
+                            for (int j = 0; j < Legth(mOptions2Items.get(i)); j++) {
+                                if (("" + options2).equals(mOptions2Items.get(i).get(j) + "")) {
+                                    option2 = j;
+                                    if (options3 != null && Legth(mOptions3Items) > 0) {
+                                        for (int k = 0; k < Legth(mOptions3Items.get(i).get(j)); k++) {
+                                            if (("" + options3).equals(mOptions3Items.get(i).get(j).get(k) + "")) {
+                                                option3 = k;
+                                                if (options4 != null && Legth(mOptions4Items) > 0) {
+                                                    for (int h = 0; h < Legth(mOptions4Items.get(i).get(j).get(k)); h++) {
+                                                        if (("" + options4).equals(mOptions4Items.get(i).get(j).get(k).get(h) + "")) {
+                                                            option4 = h;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+            }
+            itemSelected(option1, option2, option3, option4);
+        } else {
+            if (options1 != null) {
+                for (int i = 0; i < Legth(mOptions1Item); i++) {
+                    if (("" + options1).equals(mOptions1Item.get(i) + "")) {
+                        wv_option1.setCurrentItem(i);
+                        break;
+                    }
+                }
+            }
+
+            if (options2 != null) {
+                for (int i = 0; i < Legth(mOptions2Item); i++) {
+                    if (("" + options2).equals(mOptions2Item.get(i) + "")) {
+                        wv_option2.setCurrentItem(i);
+                        break;
+                    }
+
+                }
+            }
+
+            if (options3 != null) {
+                for (int i = 0; i < Legth(mOptions3Item); i++) {
+                    if (("" + options3).equals(mOptions3Item.get(i) + "")) {
+                        wv_option3.setCurrentItem(i);
+                        break;
+                    }
+
+                }
+            }
+
+            if (options4 != null) {
+                for (int i = 0; i < Legth(mOptions4Item); i++) {
+                    if (("" + options4).equals(mOptions4Item.get(i) + "")) {
+                        wv_option4.setCurrentItem(i);
+                        break;
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    public int Legth(Object list) {
+        if (list == null)
+            return 0;
+        else
+            return ((List) list).size();
     }
 
     private void itemSelected(int opt1Select, int opt2Select, int opt3Select) {
@@ -414,6 +510,24 @@ public class WheelOptions<T> {
         if (mOptions3Items != null) {
             wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(opt1Select).get(opt2Select)));
             wv_option3.setCurrentItem(opt3Select);
+        }
+    }
+
+    private void itemSelected(int opt1Select, int opt2Select, int opt3Select, int opt4Select) {
+        if (mOptions1Items != null) {
+            wv_option1.setCurrentItem(opt1Select);
+        }
+        if (mOptions2Items != null) {
+            wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(opt1Select)));
+            wv_option2.setCurrentItem(opt2Select);
+        }
+        if (mOptions3Items != null) {
+            wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(opt1Select).get(opt2Select)));
+            wv_option3.setCurrentItem(opt3Select);
+        }
+        if (mOptions4Items != null) {
+            wv_option4.setAdapter(new ArrayWheelAdapter(mOptions4Items.get(opt1Select).get(opt2Select).get(opt3Select)));
+            wv_option4.setCurrentItem(opt4Select);
         }
     }
 
