@@ -78,6 +78,7 @@ public class TimePickerView3 extends BasePickerView implements View.OnClickListe
         }
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
+        timePickerView.setPadding(0,0,0,getNavigationBarHeight(context));
         timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
 
         initWheelTime(timePickerView);

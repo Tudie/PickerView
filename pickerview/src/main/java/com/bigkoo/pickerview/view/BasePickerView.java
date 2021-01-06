@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -21,6 +23,8 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.configure.PickerOptions;
@@ -61,10 +65,11 @@ public class BasePickerView {
 
     /**
      * 获取是否存在NavigationBar
+     *
      * @param context
      * @return
      */
-    public boolean checkDeviceHasNavigationBar(Context context) {
+    public static boolean checkNavigationBarShow(@NonNull Context context) {
         boolean hasNavigationBar = false;
         Resources rs = context.getResources();
         int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
@@ -75,7 +80,16 @@ public class BasePickerView {
             Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
             Method m = systemPropertiesClass.getMethod("get", String.class);
             String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
-            if ("1".equals(navBarOverride)) {
+            //判断是否隐藏了底部虚拟导航
+            int navigationBarIsMin = 0;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                navigationBarIsMin = Settings.System.getInt(context.getContentResolver(),
+                        "navigationbar_is_min", 0);
+            } else {
+                navigationBarIsMin = Settings.Global.getInt(context.getContentResolver(),
+                        "navigationbar_is_min", 0);
+            }
+            if ("1".equals(navBarOverride) || 1 == navigationBarIsMin) {
                 hasNavigationBar = false;
             } else if ("0".equals(navBarOverride)) {
                 hasNavigationBar = true;
@@ -84,32 +98,35 @@ public class BasePickerView {
         }
         return hasNavigationBar;
     }
+
+
     /**
      * 获取虚拟功能键高度
+     *
      * @param context
      * @return
      */
-    public int getVirtualBarHeigh(Context context) {
-        if (!checkDeviceHasNavigationBar(context)){
+    public int getNavigationBarHeight(Context context) {
+        if (!checkNavigationBarShow(context)) {
             return 0;
         }
-        int vh = 0;
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
-        DisplayMetrics dm = new DisplayMetrics();
-        try {
-            @SuppressWarnings("rawtypes")
-            Class c = Class.forName("android.view.Display");
-            @SuppressWarnings("unchecked")
-            Method method = c.getMethod("getRealMetrics", DisplayMetrics.class);
-            method.invoke(display, dm);
-            vh = dm.heightPixels - windowManager.getDefaultDisplay().getHeight();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return vh/2;
+        Resources resources = context.getResources();
+        int resourceId=resources.getIdentifier("navigation_bar_height","dimen","android");
+        int height = resources.getDimensionPixelSize(resourceId+10);
+        return height;
+
     }
 
+    public static int px2dp(Context context,float pxValue){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        //在代码中转换时最后加上了0.5f，Android官方文档给的解释是为了向上取整，这样转换也就更精确
+        return (int) (pxValue / scale + 0.5f);
+    }
+    public static int dp2px(Context context,float dipValue){
+        int spToInt= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dipValue,context.getResources().getDisplayMetrics());
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return spToInt;
+    }
     protected void initViews() {
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -149,9 +166,7 @@ public class BasePickerView {
             }
             //这个是真正要加载时间选取器的父布局
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
-//            params.height=params.height+getVirtualBarHeigh(context);
             contentContainer.setLayoutParams(params);
-            contentContainer.setPadding(0,0,0,getVirtualBarHeigh(context));
         }
         setKeyBackCancelable(true);
     }

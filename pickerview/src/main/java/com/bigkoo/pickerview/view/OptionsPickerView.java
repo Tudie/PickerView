@@ -75,6 +75,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         // ----滚轮布局
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
+        optionsPicker.setPadding(0,0,0,getNavigationBarHeight(context));
         optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
         wheelOptions = new WheelOptions<>(optionsPicker, mPickerOptions.isRestoreItem);
