@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -76,7 +77,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
         timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
-
         initWheelTime(timePickerView);
     }
 
@@ -88,7 +88,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
                 public void onTimeSelectChanged() {
                     try {
                         Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date,date);
+                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date, date);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -230,7 +230,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (mPickerOptions.timeSelectListener != null) {
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                mPickerOptions.timeSelectListener.onTimeSelect(date,date, clickView);
+                mPickerOptions.timeSelectListener.onTimeSelect(date, date, clickView);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
