@@ -151,6 +151,7 @@ public class OptionsPickerBuilder {
         mPickerOptions.label3 = label3;
         return this;
     }
+
     public OptionsPickerBuilder setLabels(String label1, String label2, String label3, String label4) {
         mPickerOptions.label1 = label1;
         mPickerOptions.label2 = label2;
@@ -158,6 +159,7 @@ public class OptionsPickerBuilder {
         mPickerOptions.label4 = label4;
         return this;
     }
+
     /**
      * 设置Item 的间距倍数，用于控制 Item 高度间隔
      *
@@ -213,10 +215,28 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    public OptionsPickerBuilder setCyclic(boolean cyclic1) {
+        mPickerOptions.cyclic1 = cyclic1;
+        return this;
+    }
+
+    public OptionsPickerBuilder setCyclic(boolean cyclic1, boolean cyclic2) {
+        mPickerOptions.cyclic1 = cyclic1;
+        mPickerOptions.cyclic2 = cyclic2;
+        return this;
+    }
     public OptionsPickerBuilder setCyclic(boolean cyclic1, boolean cyclic2, boolean cyclic3) {
         mPickerOptions.cyclic1 = cyclic1;
         mPickerOptions.cyclic2 = cyclic2;
         mPickerOptions.cyclic3 = cyclic3;
+        return this;
+    }
+
+    public OptionsPickerBuilder setCyclic(boolean cyclic1, boolean cyclic2, boolean cyclic3, boolean cyclic4) {
+        mPickerOptions.cyclic1 = cyclic1;
+        mPickerOptions.cyclic2 = cyclic2;
+        mPickerOptions.cyclic3 = cyclic3;
+        mPickerOptions.cyclic4 = cyclic4;
         return this;
     }
 
