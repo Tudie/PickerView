@@ -43,6 +43,6 @@ afterEvaluate {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api project(path: ':wheelview')
+    api project(':wheelview')
     implementation'androidx.annotation:annotation:1.6.0'
 }
